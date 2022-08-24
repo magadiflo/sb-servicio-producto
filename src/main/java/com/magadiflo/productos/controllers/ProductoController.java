@@ -44,6 +44,14 @@ public class ProductoController {
 		Producto producto = this.productoService.findById(id);
 		//producto.setPort(Integer.parseInt(env.getProperty("local.server.port"))); //local, prefijo que se le agrega, server.port el puerto que queremos obtener
 		producto.setPort(this.port);
+		
+		
+		//Simulando un error
+		boolean ok = false;
+		if(!ok) {
+			throw new RuntimeException("No se pudo cargar un producto");
+		}
+		
 		return producto;
 	}
 
