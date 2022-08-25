@@ -56,11 +56,11 @@ public class ProductoController {
 		//Se configuró con más tiempo para el timeout, de esta forma, así aquí haya un tiempo de demora de
 		//2 segundos, el servicio retornará el producto solicitado
 		
-		try {
+		/*try {
 			Thread.sleep(2000L);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		//---
 		return producto;
 	}
