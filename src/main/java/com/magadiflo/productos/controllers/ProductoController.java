@@ -1,6 +1,7 @@
 package com.magadiflo.productos.controllers;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -40,28 +41,22 @@ public class ProductoController {
 	}
 
 	@GetMapping("/{id}")
-	public Producto detalle(@PathVariable Long id) {
+	public Producto detalle(@PathVariable Long id) throws InterruptedException {
+		
+		//-- Simulando un error
+		if(id.equals(10L)) {
+			throw new IllegalStateException("Producto no encontrado");			
+		}
+		
+		//-- Simulando retardo de 5 segundos
+		if(id.equals(7L)) {
+			TimeUnit.SECONDS.sleep(5L);
+		}
+		//--
+		
 		Producto producto = this.productoService.findById(id);
 		producto.setPort(Integer.parseInt(env.getProperty("local.server.port"))); //local, prefijo que se le agrega, server.port el puerto que queremos obtener. Tomará el puerto real y no el cero definido
-		//producto.setPort(this.port);		
-		//--- Simulando TimeOut
-		
-		//** Antes de configurar el application.properties del servicio item
-		//El tiempo por defecto en Hystrix y Ribbon es de 1 segundo, luego de eso lanzará una excepción.
-		//Pero, como tenemos configurado un camino alternativo usando @HystrixCommand(fallbackMethod = "metodoAlternatrivo")
-		//ya no lanzará el error, sino ese método será el que se lance (recordar que ese método está configurado en el
-		//controller del servicio item)
-		
-		//** Luego de configrar el application.properties del servicio item
-		//Se configuró con más tiempo para el timeout, de esta forma, así aquí haya un tiempo de demora de
-		//2 segundos, el servicio retornará el producto solicitado
-		
-		/*try {
-			Thread.sleep(2000L);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-		//---
+		//producto.setPort(this.port);
 		return producto;
 	}
 
