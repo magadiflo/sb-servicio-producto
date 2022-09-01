@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,6 +70,21 @@ public class ProductoController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public Producto crear(@RequestBody Producto producto) {
 		return this.productoService.save(producto);		
+	}
+	
+	@PutMapping(path = "/{id}")
+	@ResponseStatus(code = HttpStatus.OK)
+	public Producto editar(@RequestBody Producto producto, @PathVariable Long id) {
+		Producto productoBD = this.productoService.findById(id);
+		productoBD.setNombre(producto.getNombre());
+		productoBD.setPrecio(producto.getPrecio());
+		return this.productoService.save(productoBD);
+	}
+	
+	@DeleteMapping(path = "/{id}")
+	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	public void eliminar(@PathVariable Long id) {
+		this.productoService.deleteById(id);		
 	}
 	
 
