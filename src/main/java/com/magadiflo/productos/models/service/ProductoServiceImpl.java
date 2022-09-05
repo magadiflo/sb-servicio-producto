@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.magadiflo.productos.models.dao.IProductoDao;
-import com.magadiflo.productos.models.entity.Producto;
+import com.magadiflo.commons.models.entity.Producto;
 
 @Service
 public class ProductoServiceImpl implements IProductoService {

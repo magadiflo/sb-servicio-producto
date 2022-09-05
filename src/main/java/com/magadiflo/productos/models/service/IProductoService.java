@@ -2,7 +2,7 @@ package com.magadiflo.productos.models.service;
 
 import java.util.List;
 
-import com.magadiflo.productos.models.entity.Producto;
+import com.magadiflo.commons.models.entity.Producto;
 
 public interface IProductoService {
 	
